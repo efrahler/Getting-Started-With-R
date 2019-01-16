@@ -1,0 +1,30 @@
+---
+title: "Loading the Data"
+author: "efrahler"
+date: "January 15, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Loading Data in R Markdown
+
+This is how to load data into R and how to convert it.
+
+```{r, include = FALSE}
+library(tidyverse)
+```
+
+```{r}
+china_flight_data <-  read.csv("China_EO_49to17.csv") # Reads a file and inputs it as a data frame
+object2 <-  as_tibble(china_flight_data) # Converts data frame into a tibble
+object2 <- arrange(object2, desc(Year)) # Arranges the data set by year, descending
+object2
+object3 <- as_tibble(china_flight_data[,c("Year", "Beijing_Enterprise", "Shanghai_Enterprise", "Beijing_Output", "Shanghai_Output")]) # Selects Shanghai, Beijing, and Year columns only
+object3 <- filter(object3, Year >= 2000) # Selects data from 2000 and later
+object3
+ratio <- mutate(object3, Output_Ratio = Beijing_Output / Shanghai_Output) # Adds a column to the new tibble of a ratio of the outputs
+ratio
+```
